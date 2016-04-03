@@ -7,12 +7,14 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="supinfo.com.supfitness.MainActivity">
+    tools:context="supinfo.com.supfitness.MainActivity"
+    android:weightSum="1">
 
     <android.support.design.widget.TabLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/viewTab" />
+        android:id="@+id/viewTab"
+        android:layout_weight="11.05" />
 
     <android.support.v4.view.ViewPager
         android:layout_width="wrap_content"
