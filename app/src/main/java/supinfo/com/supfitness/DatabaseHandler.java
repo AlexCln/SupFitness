@@ -56,7 +56,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     public ArrayList<Weight> getListWeight(){
         ArrayList<Weight> list = new ArrayList<Weight>();
-
-        Weight weight
+        return list;
     }
 }

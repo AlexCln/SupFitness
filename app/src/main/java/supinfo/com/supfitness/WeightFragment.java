@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
 
 public class WeightFragment extends Fragment {
     @Nullable
@@ -15,13 +14,9 @@ public class WeightFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-
-        View rootView = inflater.inflate(R.layout.fragment_weight, container,false);
-
-        ArrayList<Weight> listWeight =
         // Voir : http://stackoverflow.com/questions/22512833/create-listview-in-fragment-android
         // Mettre la fonction pour récupérer les poids dans le Database Handler
 
-        return
+        return inflater.inflate(R.layout.fragment_weight, container,false);
     }
 }
