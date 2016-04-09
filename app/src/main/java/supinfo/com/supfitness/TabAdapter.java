@@ -2,13 +2,14 @@ package supinfo.com.supfitness;
 
 
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v7.app.ActionBar;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
-public class TabAdapter extends FragmentPagerAdapter {
+
+public class TabAdapter extends FragmentStatePagerAdapter {
     int nbTab;
 
-    public TabAdapter(ActionBar fm, int tab) {
+    public TabAdapter(FragmentManager fm, int tab) {
         super(fm);
         this.nbTab = tab;
     }
@@ -18,14 +19,11 @@ public class TabAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                WeightFragment weightTab = new WeightFragment();
-                return weightTab;
+                return new WeightFragment();
             case 1:
-                WeightCurveFragment weightCurveTab = new WeightCurveFragment();
-                return weightCurveTab;
+                return new WeightCurveFragment();
             case 2:
-                FootRacesFragment footRacesTab = new FootRacesFragment();
-                return footRacesTab;
+                return new FootRacesFragment();
             default:
                 return null;
         }

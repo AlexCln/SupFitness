@@ -7,15 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.content.Context;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -32,13 +23,15 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(widgetToolbar);
 
         TabLayout viewTabLayout = (TabLayout) findViewById(R.id.widgetTabLayout);
+        assert viewTabLayout != null;
         viewTabLayout.addTab(viewTabLayout.newTab().setText("Weight"));
         viewTabLayout.addTab(viewTabLayout.newTab().setText("Weight Curve"));
         viewTabLayout.addTab(viewTabLayout.newTab().setText("Foot Races"));
         viewTabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-        final TabAdapter adapter = new TabAdapter(getSupportActionBar(), viewTabLayout.getTabCount());
+        final TabAdapter adapter = new TabAdapter(getSupportFragmentManager(), viewTabLayout.getTabCount());
+        assert viewPager != null;
         viewPager.setAdapter(adapter);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(viewTabLayout));
         viewTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
@@ -61,7 +54,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        return id == R.id.widgetToolbar || super.onOptionsItemSelected(item);
     }
 }
