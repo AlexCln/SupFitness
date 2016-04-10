@@ -14,7 +14,7 @@ import java.util.List;
 
 public class DatabaseHandler{
 
-    public static final String dbSupFitness = "SupFitnessDb2";
+    public static final String dbSupFitness = "SupFitnessDb";
     public static final String tableWeight = "weights";
     public static final int dbVersion = 1;
 

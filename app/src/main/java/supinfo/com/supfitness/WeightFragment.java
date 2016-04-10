@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.NumberPicker;
@@ -35,17 +37,13 @@ public class WeightFragment extends Fragment implements NumberPicker.OnValueChan
     public static Dialog dialog;
     public Context context;
     public int _weight;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_weight, container, false);
         weightListView = (ListView) view.findViewById(R.id.listWeightView);
-
-  //     ListAdapter listAdapter = new SimpleCursorAdapter(getActivity(), R.layout.recycler_weight,
-  //             cursor,
-  //             new String[]{"3","date", "2"},
-   //             new int[] {R.id.textWeightTitle, R.id.textWeightDate, R.id.textWeightImc});
 
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) view.findViewById(R.id.widgetFloatingActionButton);
@@ -84,15 +82,19 @@ public class WeightFragment extends Fragment implements NumberPicker.OnValueChan
       dialog.setContentView(R.layout.dialog_weight);
       Button buttonCancel = (Button) dialog.findViewById(R.id.buttonCancel);
       Button buttonAdd = (Button) dialog.findViewById(R.id.buttonAdd);
-      final NumberPicker numberPicker = (NumberPicker) dialog.findViewById(R.id.numberPickerWeight);
-      numberPicker.setMaxValue(300);
-      numberPicker.setMinValue(20);
-      numberPicker.setWrapSelectorWheel(false);
-      numberPicker.setOnValueChangedListener(this);
+      //final NumberPicker numberPicker = (NumberPicker) dialog.findViewById(R.id.numberPickerWeight);
+      //numberPicker.setMaxValue(300);
+      //numberPicker.setMinValue(20);
+      //numberPicker.setWrapSelectorWheel(false);
+      //numberPicker.setOnValueChangedListener(this);
+      final EditText weightText = (EditText) dialog.findViewById(R.id.textEditWeight);
+      weightText.setRawInputType(Configuration.KEYBOARD_12KEY);
       buttonAdd.setOnClickListener(new View.OnClickListener()
       {
           @Override
           public void onClick(View v) {
+              db.addWeight(Integer.parseInt(weightText.getText().toString()));
+              LoadWeight();
               dialog.dismiss();
           }
       });
