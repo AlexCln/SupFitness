@@ -29,5 +29,5 @@
         android:layout_alignBottom="@+id/buttonCancel"
         android:layout_marginRight="16dp"
         android:layout_toLeftOf="@+id/numberPicker1"
-        android:text="Add" />
+        android:text="Add"/>
 </RelativeLayout>

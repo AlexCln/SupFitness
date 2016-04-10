@@ -5,9 +5,9 @@ public class Weight {
     private int _id;
     private int _weight;
     private String _date;
-    private String _imc;
+    private int _imc;
 
-    public Weight(int weight, String date, String imc){
+    public Weight(int weight, String date, int imc){
         this._weight = weight;
         this._date = date;
         this._imc = imc;
@@ -27,11 +27,11 @@ public class Weight {
         return _date;
     }
 
-    public String get_imc() {
+    public int get_imc() {
         return _imc;
     }
 
-    public void set_imc(String _imc) {
+    public void set_imc(int _imc) {
         this._imc = _imc;
     }
 
