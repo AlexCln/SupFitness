@@ -50,6 +50,7 @@ public class DatabaseHandler{
         @Override
         public void onCreate(SQLiteDatabase _db) {
             _db.execSQL(scriptCreateDb);
+            Log.d("Db created", "");
         }
 
         @Override
@@ -91,7 +92,9 @@ public class DatabaseHandler{
     }
 
     public Cursor getCursor(){
-        Cursor c = _db.query(tableWeight, new String[]{columnId, columnWeight, columnDate, columnImc}, null, null, null, null, null);
+        WeightHelper helper = new WeightHelper(context);
+        SQLiteDatabase db = helper.getWritableDatabase();
+        Cursor c = db.query(tableWeight, new String[]{columnId, columnWeight, columnDate, columnImc}, null, null, null, null, null);
         if(c!=null){
             c.moveToFirst();
         }
@@ -114,6 +117,8 @@ public class DatabaseHandler{
 
 
     public long addWeight(int weight){
+        WeightHelper helper = new WeightHelper(context);
+        SQLiteDatabase db = helper.getWritableDatabase();
         SimpleDateFormat date = new SimpleDateFormat("yyyy-MM-dd");
         String dateString = date.format(new Date());
         ContentValues values = new ContentValues();
@@ -123,7 +128,7 @@ public class DatabaseHandler{
         values.put(columnImc, 23);
         Log.d("Put add to value", "");
 
-        return _db.insert(dbSupFitness, null, values);
+        return db.insert(dbSupFitness, null, values);
     }
 
     public void deleteWeight(Weight weight){

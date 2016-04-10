@@ -1,42 +1,37 @@
 package supinfo.com.supfitness;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.NumberPicker;
-import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+import static supinfo.com.supfitness.DatabaseHandler.*;
+
 public class WeightFragment extends Fragment implements NumberPicker.OnValueChangeListener {
-    public DatabaseHandler db;
+    public DatabaseHandler handler;
     public ListView weightListView;
     public static List<Weight> weightList;
-    public NumberPicker numberPicker;
     public static Dialog dialog;
     public Context context;
     public int _weight;
+
+
 
     @Nullable
     @Override
@@ -44,6 +39,8 @@ public class WeightFragment extends Fragment implements NumberPicker.OnValueChan
         super.onCreate(savedInstanceState);
         View view = inflater.inflate(R.layout.fragment_weight, container, false);
         weightListView = (ListView) view.findViewById(R.id.listWeightView);
+
+
 
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) view.findViewById(R.id.widgetFloatingActionButton);
@@ -55,24 +52,23 @@ public class WeightFragment extends Fragment implements NumberPicker.OnValueChan
         });
 
         openDb();
-
         LoadWeight();
         return view;
     }
 
     public void LoadWeight() {
-       Cursor cursor = db.getCursor();
+       Cursor cursor = handler.getCursor();
      String[] field = new String[]{
-             DatabaseHandler.columnId,
-             DatabaseHandler.columnWeight,
-             DatabaseHandler.columnDate,
-             DatabaseHandler.columnImc,
+             columnId,
+             columnWeight,
+             columnDate,
+             columnImc,
      };
-     int[] to = new int[]{R.id.textWeightTitle, R.id.textWeightDate, R.id.textWeightImc};
-     SimpleCursorAdapter cursorAdapter;
-      cursorAdapter = new SimpleCursorAdapter (getContext(), R.layout.recycler_weight, cursor, field, to, 0);
+        weightListView = (ListView) weightListView.findViewById(R.id.listWeightView);
 
-       weightListView = (ListView) weightListView.findViewById(R.id.listWeightView);
+        int[] to = new int[]{R.id.textWeightTitle, R.id.textWeightDate, R.id.textWeightImc};
+     WeightCursorAdapter cursorAdapter;
+      cursorAdapter = new WeightCursorAdapter (getContext(), cursor, android.R.layout.simple_list_item_1);
         weightListView.setAdapter(cursorAdapter);
     }
 
@@ -82,18 +78,13 @@ public class WeightFragment extends Fragment implements NumberPicker.OnValueChan
       dialog.setContentView(R.layout.dialog_weight);
       Button buttonCancel = (Button) dialog.findViewById(R.id.buttonCancel);
       Button buttonAdd = (Button) dialog.findViewById(R.id.buttonAdd);
-      //final NumberPicker numberPicker = (NumberPicker) dialog.findViewById(R.id.numberPickerWeight);
-      //numberPicker.setMaxValue(300);
-      //numberPicker.setMinValue(20);
-      //numberPicker.setWrapSelectorWheel(false);
-      //numberPicker.setOnValueChangedListener(this);
       final EditText weightText = (EditText) dialog.findViewById(R.id.textEditWeight);
       weightText.setRawInputType(Configuration.KEYBOARD_12KEY);
       buttonAdd.setOnClickListener(new View.OnClickListener()
       {
           @Override
           public void onClick(View v) {
-              db.addWeight(Integer.parseInt(weightText.getText().toString()));
+              handler.addWeight(Integer.parseInt(weightText.getText().toString()));
               LoadWeight();
               dialog.dismiss();
           }
@@ -113,8 +104,8 @@ public class WeightFragment extends Fragment implements NumberPicker.OnValueChan
 
     }
     private void openDb(){
-        db = new DatabaseHandler(getActivity());
-        db.open();
+        handler = new DatabaseHandler(getActivity());
+        handler.open();
     }
 
 }
