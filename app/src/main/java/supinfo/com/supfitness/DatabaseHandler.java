@@ -17,6 +17,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public static final String columnId = "_id";
     public static final String columnWeight = "_weight";
     public static final String columnDate = "_date";
+    public static final String columnImc = "_imc";
 
     public DatabaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, dbName, factory, dbVersion);

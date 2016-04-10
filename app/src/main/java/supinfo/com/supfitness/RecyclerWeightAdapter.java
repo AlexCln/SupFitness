@@ -1,13 +1,12 @@
 package supinfo.com.supfitness;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-
-// Reste du tuto : http://www.truiton.com/2015/02/android-recyclerview-tutorial/
 
 public class RecyclerWeightAdapter extends  RecyclerView
         .Adapter<RecyclerWeightAdapter
@@ -15,22 +14,44 @@ public class RecyclerWeightAdapter extends  RecyclerView
 
 
     private static String LOG_TAG = "RecyclerWeightAdapter";
+    private Context context;
     private ArrayList<Weight> weightArrayList;
     private static ClickListener clickListener;
 
+    public RecyclerWeightAdapter (Context c, ArrayList<Weight> weights){
+        this.context = c;
+        this.weightArrayList = new ArrayList<>(weights);
+    }
+
     @Override
     public WeightObjectHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        return null;
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycler_weight, parent, false);
+        WeightObjectHolder weightObjectHolder = new WeightObjectHolder(view);
+
+        return weightObjectHolder;
     }
 
     @Override
     public void onBindViewHolder(WeightObjectHolder holder, int position) {
-
+        holder.weight.setText(String.valueOf(weightArrayList.get(position).get_weight()));
+        holder.dateTime.setText(String.valueOf(weightArrayList.get(position).get_date()));
+        holder.imc.setText(String.valueOf(weightArrayList.get(position).get_imc()));
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return weightArrayList.size();
+    }
+
+    public void addWeight(Weight weight, int index){
+        weightArrayList.add(weight);
+        notifyItemChanged(index);
+    }
+
+
+    public void deleteWeight(int index){
+        weightArrayList.remove(index);
+        notifyItemRemoved(index);
     }
 
     public static class WeightObjectHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -52,10 +73,11 @@ public class RecyclerWeightAdapter extends  RecyclerView
         }
     }
 
-    public class DataObjectHolder {
+    public void setOnItemClickListener(ClickListener listener){
+        this.clickListener = listener;
     }
 
     public interface ClickListener{
-        public void onItemClick(int position, View view);
+        void onItemClick(int position, View view);
     }
 }

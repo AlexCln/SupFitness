@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SupFitness</string>
+    <string name="add_weight">Added to Weight</string>
+    <string name="remove_weight">Removed Weight</string>
 </resources>

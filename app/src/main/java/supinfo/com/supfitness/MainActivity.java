@@ -3,6 +3,7 @@ package supinfo.com.supfitness;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -21,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar widgetToolbar = (Toolbar)  findViewById(R.id.widgetToolbar);
         setSupportActionBar(widgetToolbar);
+        //widgetToolbar.setNavigationIcon(R.drawable.ic_launcher);
 
         TabLayout viewTabLayout = (TabLayout) findViewById(R.id.widgetTabLayout);
         assert viewTabLayout != null;

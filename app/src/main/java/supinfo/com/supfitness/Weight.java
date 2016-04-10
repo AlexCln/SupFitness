@@ -1,15 +1,16 @@
 package supinfo.com.supfitness;
 
-import java.util.Date;
 
 public class Weight {
     private int _id;
     private int _weight;
-    private Date _date;
+    private String _date;
+    private String _imc;
 
-    public Weight(int weight, Date date){
+    public Weight(int weight, String date, String imc){
         this._weight = weight;
         this._date = date;
+        this._imc = imc;
     }
 
     public Weight(){}
@@ -22,11 +23,19 @@ public class Weight {
         return _weight;
     }
 
-    public Date get_date() {
+    public String get_date() {
         return _date;
     }
 
-    public void set_date(Date _date) {
+    public String get_imc() {
+        return _imc;
+    }
+
+    public void set_imc(String _imc) {
+        this._imc = _imc;
+    }
+
+    public void set_date(String _date) {
         this._date = _date;
     }
 
